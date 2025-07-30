@@ -243,6 +243,22 @@ def get_parallax_corrected_lonlats_manual(sat_lon, sat_lat, sat_alt, lon, lat, h
     lon_corr, lat_corr, _ = ecef2lla.transform(cld_pc_pos[...,0], cld_pc_pos[...,1], cld_pc_pos[...,2])
     return lon_corr, lat_corr
 
+def get_surface_parallax_displacement_manual(
+        sat_lon, sat_lat, sat_alt, lon, lat, height):
+    """Calculate surface parallax displacement.
+
+    Calculate the displacement due to parallax error.  Input parameters are
+    identical to :func:`get_parallax_corrected_lonlats`.
+
+    Returns:
+        (numbers.Number, dask.array.Array): parallax displacement in meters
+    """
+    (corr_lon, corr_lat) = get_parallax_corrected_lonlats_manual(sat_lon, sat_lat, sat_alt, lon, lat, height)
+    # Get parallax displacement
+    geod = Geod(ellps="grs80")
+    _, _, parallax_dist = geod.inv(corr_lon, corr_lat, lon, lat)
+    return parallax_dist
+
 class ParallaxCorrection:
     """Parallax correction calculations.
 
