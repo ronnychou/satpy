@@ -155,7 +155,7 @@ def _get_parallax_shift_xyz(sat_lon, sat_lat, sat_alt, lon, lat, parallax_distan
     Returns:
         Parallax shift in cartesian coordinates in meter.
     """
-    sat_xyz = np.hstack(lonlat2xyz(sat_lon, sat_lat)) * sat_alt
+    sat_xyz = np.hstack(lonlat2xyz(sat_lon, sat_lat)) * (EARTH_RADIUS*1e3+sat_alt)
     cth_xyz = np.stack(lonlat2xyz(lon, lat), axis=-1) * EARTH_RADIUS*1e3  # km → m
     delta_xyz = cth_xyz - sat_xyz
     sat_distance = np.sqrt((delta_xyz*delta_xyz).sum(axis=-1))
@@ -192,6 +192,56 @@ def _calculate_slant_cloud_distance(height, elevation):
                 "correction.")
     return height / np.sin(np.deg2rad(elevation))
 
+
+def get_parallax_corrected_lonlats_manual(sat_lon, sat_lat, sat_alt, lon, lat, height):
+    import pyproj
+    a = 6378137.0  # GRS80
+    f = 1 / 298.257222101
+    b = a * (1 - f)
+    e2 = 1 - (b / a) ** 2
+
+    geocentric = pyproj.CRS.from_proj4("+proj=geocent +ellps=GRS80 +units=m +no_defs")
+    geodetic = pyproj.CRS.from_proj4("+proj=latlong +ellps=GRS80 +no_defs")
+    lla2ecef = pyproj.Transformer.from_crs(geodetic, geocentric, always_xy=True)
+    ecef2lla = pyproj.Transformer.from_crs(geocentric, geodetic, always_xy=True)
+
+    # satellite position (ECEF)
+    sat_x, sat_y, sat_z = lla2ecef.transform(sat_lon, sat_lat, sat_alt)
+    sat_pos = np.stack([sat_x, sat_y, sat_z], axis=-1)
+
+    # observation position (ECEF)
+    cld_x, cld_y, cld_z = lla2ecef.transform(lon, lat, np.zeros_like(lon))
+    cld_pos = np.stack([cld_x, cld_y, cld_z], axis=-1)
+    vec = cld_pos - sat_pos
+
+    # parameters for the ellipsoid
+    # use parallax-ed lat to approximately calculate the radius of curvature of the true lat
+    N = a / np.sqrt(1 - e2 * np.sin(np.radians(lat)) ** 2)
+    M = N * (1 - e2)
+    N_h = N + height
+    M_h = M + height
+    k = (N_h / M_h) ** 2
+
+    # combine ellipsoid equation and line of sight equation
+    # to solve for the intersection of the line of sight and the ellipsoid
+    # this is a quadratic equation in t, where t is the distance along the line of sight
+    # from the satellite position to the cloud position
+    A = vec[...,0]**2 + vec[...,1]**2 + k * vec[...,2]**2
+    B = 2 * (sat_pos[0]*vec[...,0] + sat_pos[1]*vec[...,1] + k * sat_pos[2]*vec[...,2])
+    C = sat_pos[0]**2 + sat_pos[1]**2 + k * sat_pos[2]**2 - N_h**2
+
+    # solve quadratic equation
+    discriminant = B**2 - 4 * A * C
+    if np.any(discriminant < 0):
+        raise ValueError("No solution for parallax correction.")
+    # since the intersection is near the pixel, t is approximately 0.99
+    # (-B + np.sqrt(discriminant)) / (2 * A) > 1
+    t = (-B - np.sqrt(discriminant)) / (2*A)
+    t = t[..., None]
+    cld_pc_pos = sat_pos + t * vec
+
+    lon_corr, lat_corr, _ = ecef2lla.transform(cld_pc_pos[...,0], cld_pc_pos[...,1], cld_pc_pos[...,2])
+    return lon_corr, lat_corr
 
 class ParallaxCorrection:
     """Parallax correction calculations.
@@ -282,6 +332,7 @@ class ParallaxCorrection:
     def corrected_area(self, cth_dataset,
                        cth_resampler="nearest",
                        cth_radius_of_influence=50000,
+                       method="default",
                        lonlat_chunks=1024):
         """Return the parallax corrected SwathDefinition.
 
@@ -325,7 +376,12 @@ class ParallaxCorrection:
 
         (base_lon, base_lat) = self.base_area.get_lonlats(chunks=lonlat_chunks)
         # calculate the shift/error due to the parallax effect
-        (corrected_lon, corrected_lat) = get_parallax_corrected_lonlats(
+        if method == "manual":
+            corrected_lon, corrected_lat = get_parallax_corrected_lonlats_manual(
+                sat_lon, sat_lat, sat_alt_m,
+                base_lon, base_lat, cth_dataset.data)
+        else:
+            corrected_lon, corrected_lat = get_parallax_corrected_lonlats(
                 sat_lon, sat_lat, sat_alt_m,
                 base_lon, base_lat, cth_dataset.data)
 

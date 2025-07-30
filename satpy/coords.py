@@ -41,7 +41,8 @@ def add_xy_coords(data_arr, area, crs=None):
     """
     if "x" in data_arr.coords and "y" in data_arr.coords:
         # x/y coords already provided
-        return data_arr
+        if data_arr["x"].attrs.get("units", None) and data_arr["y"].attrs.get("units", None):
+            return data_arr
     if "x" not in data_arr.dims or "y" not in data_arr.dims:
         # no defined x and y dimensions
         return data_arr

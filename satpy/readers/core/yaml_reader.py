@@ -861,6 +861,15 @@ class FileYAMLReader(GenericYAMLReader, DataDownloadMixin):
 
     def _load_ancillary_variables(self, datasets, **kwargs):
         """Load the ancillary variables of `datasets`."""
+        # Filter out self-referential ancillary variables before gathering IDs
+        for dataset in datasets.values():
+            dataset_name = dataset.attrs.get('name', '')
+            ancillary_variables = dataset.attrs.get("ancillary_variables", [])
+            if not isinstance(ancillary_variables, (list, tuple, set)):
+                ancillary_variables = ancillary_variables.split(" ")
+            filtered_av = [av for av in ancillary_variables if av != dataset_name]
+            dataset.attrs["ancillary_variables"] = filtered_av
+            
         all_av_ids = self._gather_ancillary_variables_ids(datasets)
         loadable_av_ids = [av_id for av_id in all_av_ids if av_id not in datasets]
         if not all_av_ids:
@@ -884,11 +893,23 @@ class FileYAMLReader(GenericYAMLReader, DataDownloadMixin):
         """
         all_av_ids = set()
         for dataset in datasets.values():
+            dataset_name = dataset.attrs.get("name")
             ancillary_variables = dataset.attrs.get("ancillary_variables", [])
             if not isinstance(ancillary_variables, (list, tuple, set)):
                 ancillary_variables = ancillary_variables.split(" ")
             av_ids = []
             for key in ancillary_variables:
+                if isinstance(key, DataID):
+                    # Skip if the ancillary variable is the dataset itself
+                    if key == self.get_dataset_key(dataset_name):
+                        logger.debug(f"Skipping self-referential DataID {key} for dataset {dataset_name}")
+                        continue
+                    av_ids.append(key)
+                    continue
+                # Skip if the ancillary variable is the dataset itself
+                if isinstance(key, str) and key.strip() == dataset_name:
+                    logger.debug(f"Skipping self-referential ancillary variable {key} for dataset {dataset_name}")
+                    continue
                 try:
                     av_ids.append(self.get_dataset_key(key))
                 except KeyError:

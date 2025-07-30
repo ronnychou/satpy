@@ -1,0 +1,392 @@
+reader:
+  name: agri_fy4_l2
+  short_name: AGRI FY4B L2
+  long_name: FY-4B AGRI Level 2 Products NetCDF format
+  description: FY-4B AGRI Level 2 products NetCDF reader
+  status: Nominal
+  supports_fsspec: true
+  sensors: [agri]
+  reader: !!python/name:satpy.readers.core.yaml_reader.FileYAMLReader
+
+file_types:
+  agri_l2_4000m_cth:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CTH-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_ctt:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CTT-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_oca:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_OCA-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_clm:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CLM-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_olr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_OLR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_cix:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CIX-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_rsr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_RSR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_amv:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_AMV-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_fhs:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_FHS-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_lst:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_LST-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_img:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_IMG-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_qpe:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_QPE-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_cfr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CFR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_clt:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CLT-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_lda:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_LDA-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_snc:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_SNC-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_clp:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CLP-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_ctp:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CTP-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_ulr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_ULR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_csr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CSR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_cpd:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_CPD-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_tfp:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_TFP-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_lsa:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_LSA-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_tbb:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_TBB-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_sst:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_SST-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_dlr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_DLR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_dsd:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_DSD-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+  agri_l2_4000m_ssr:
+    file_reader: !!python/name:satpy.readers.agri_l2.NC_AGRI_L2
+    file_patterns: ['{platform_id:4s}-_{instrument:4s}--_N_{observation_type:s}_{longitude:5s}_L2-_SSR-_MULT_{projection:s}_{start_time:%Y%m%d%H%M%S}_{end_time:%Y%m%d%H%M%S}_4000M_{version:s}.NC']
+
+datasets:
+  CTH:
+    name: CTH
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_cth
+    standard_name: cloud_top_height
+    units: m
+    file_key: CTH
+    ancillary_variables: [DQF]
+
+  CTT:
+    name: CTT
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_ctt
+    standard_name: cloud_top_temperature
+    units: K
+    file_key: CTT
+    ancillary_variables: [DQF]
+
+  OCA:
+    name: OCA
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_oca
+    standard_name: aerosol_optical_depth
+    units: "1"
+    file_key: OCA
+    ancillary_variables: [DQF]
+
+  CLM:
+    name: CLM
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_clm
+    standard_name: cloud_mask
+    units: "1"
+    file_key: CLM
+    ancillary_variables: [DQF]
+
+  OLR:
+    name: OLR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_olr
+    standard_name: toa_outgoing_longwave_radiance
+    units: "W/m^2"
+    file_key: OLR
+    ancillary_variables: [DQF]
+
+  CIX:
+    name: CIX
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_cix
+    standard_name: convection_initiation_index
+    units: "1"
+    file_key: CIX
+    ancillary_variables: [DQF]
+
+  RSR:
+    name: RSR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_rsr
+    standard_name: toa_reflected_shortwave_radiance
+    units: "W/m^2"
+    file_key: RSR
+    ancillary_variables: [DQF]
+
+  AMV:
+    name: AMV
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_amv
+    standard_name: atmospheric_motion_vector
+    units: "m/s"
+    file_key: AMV
+    ancillary_variables: [DQF]
+
+  FHS:
+    name: FHS
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_fhs
+    standard_name: fire_hotspot_detection
+    units: "1"
+    file_key: FHS
+    ancillary_variables: [DQF]
+
+  LST:
+    name: LST
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_lst
+    standard_name: land_surface_temperature
+    units: K
+    file_key: LST
+    ancillary_variables: [DQF]
+
+  IMG:
+    name: IMG
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_img
+    standard_name: composite_image
+    units: "1"
+    file_key: IMG
+    ancillary_variables: [DQF]
+
+  QPE:
+    name: QPE
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_qpe
+    standard_name: precipitation_rate
+    units: "mm/h"
+    file_key: QPE
+    ancillary_variables: [DQF]
+
+  CFR:
+    name: CFR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_cfr
+    standard_name: cloud_fraction
+    units: "%"
+    file_key: CFR
+    ancillary_variables: [DQF]
+
+  CLT:
+    name: CLT
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_clt
+    standard_name: cloud_type
+    units: "1"
+    file_key: CLT
+    ancillary_variables: [DQF]
+
+  LDA:
+    name: LDA
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_lda
+    standard_name: aerosol_optical_depth
+    units: "1"
+    file_key: LDA
+    ancillary_variables: [DQF]
+
+  SNC:
+    name: SNC
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_snc
+    standard_name: snow_cover
+    units: "%"
+    file_key: SNC
+    ancillary_variables: [DQF]
+
+  CLP:
+    name: CLP
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_clp
+    standard_name: cloud_phase
+    units: "1"
+    file_key: CLP
+    ancillary_variables: [DQF]
+
+  CTP:
+    name: CTP
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_ctp
+    standard_name: cloud_top_pressure
+    units: hPa
+    file_key: CTP
+    ancillary_variables: [DQF]
+
+  ULR:
+    name: ULR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_ulr
+    standard_name: surface_upwelling_longwave_radiance
+    units: "W/m^2"
+    file_key: ULR
+    ancillary_variables: [DQF]
+
+  CSR:
+    name: CSR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_csr
+    standard_name: clear_sky_radiance
+    units: "W/m^2"
+    file_key: CSR
+    ancillary_variables: [DQF]
+
+  CPD:
+    name: CPD
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_cpd
+    standard_name: cloud_optical_properties
+    units: "1"
+    file_key: CPD
+    ancillary_variables: [DQF]
+
+  TFP:
+    name: TFP
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_tfp
+    standard_name: tropopause_folding_detection
+    units: "1"
+    file_key: TFP
+    ancillary_variables: [DQF]
+
+  LSA:
+    name: LSA
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_lsa
+    standard_name: surface_albedo
+    units: "1"
+    file_key: LSA
+    ancillary_variables: [DQF]
+
+  TBB:
+    name: TBB
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_tbb
+    standard_name: toa_brightness_temperature
+    units: K
+    file_key: TBB
+    ancillary_variables: [DQF]
+
+  SST:
+    name: SST
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_sst
+    standard_name: sea_surface_temperature
+    units: K
+    file_key: SST
+    ancillary_variables: [DQF]
+
+  DLR:
+    name: DLR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_dlr
+    standard_name: surface_downwelling_longwave_radiance
+    units: "W/m^2"
+    file_key: DLR
+    ancillary_variables: [DQF]
+
+  DSD:
+    name: DSD
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_dsd
+    standard_name: dust_detection
+    units: "1"
+    file_key: DSD
+    ancillary_variables: [DQF]
+
+  SSR:
+    name: SSR
+    sensor: agri
+    resolution: 4000
+    file_type: agri_l2_4000m_ssr
+    standard_name: surface_downwelling_shortwave_radiance
+    units: "W/m^2"
+    file_key: SSR
+    ancillary_variables: [DQF]
+
+  # Datasets in all three file types
+  DQF:
+    name: DQF
+    sensor: agri
+    resolution: 4000
+    file_type: [agri_l2_4000m_cth, agri_l2_4000m_ctt, agri_l2_4000m_oca, agri_l2_4000m_clm,
+                agri_l2_4000m_olr, agri_l2_4000m_cix, agri_l2_4000m_rsr, agri_l2_4000m_amv,
+                agri_l2_4000m_fhs, agri_l2_4000m_lst, agri_l2_4000m_img, agri_l2_4000m_qpe,
+                agri_l2_4000m_cfr, agri_l2_4000m_clt, agri_l2_4000m_lda, agri_l2_4000m_snc,
+                agri_l2_4000m_clp, agri_l2_4000m_ctp, agri_l2_4000m_ulr, agri_l2_4000m_csr,
+                agri_l2_4000m_cpd, agri_l2_4000m_tfp, agri_l2_4000m_lsa, agri_l2_4000m_tbb,
+                agri_l2_4000m_sst, agri_l2_4000m_dlr, agri_l2_4000m_dsd, agri_l2_4000m_ssr]
+    standard_name: data_quality_flag
+    units: "1"
+    file_key: DQF
